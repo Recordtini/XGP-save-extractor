@@ -300,6 +300,12 @@
             "name": "Clair Obscur: Expedition 33",
             "package": "KeplerInteractive.Expedition33_ymj30pw7xe604",
             "handler": "coral-island"
+        },
+        // One Lonely Outpost
+        {
+            "name": "One Lonely Outpost",
+            "package": "FreedomGames.OneLonelyOutpostGame_0c9x75n11d8wg",
+            "handler": "one-lonely-outpost"
         }
     ]
 }

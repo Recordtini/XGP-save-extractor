@@ -43,6 +43,7 @@ Legend: ✅ Confirmed working, ❔ Unconfirmed, - Not available in the store
 | Ninja Gaiden Sigma | ✅ | - |
 | Oblivion Remastered | ✅ | ❔ |
 | Octopath Traveller | ❔ | ❔ |
+| One Lonely Outpost | ✅ | ❔ |
 | Palworld | ✅ | - |
 | Persona 5 Royal | ✅ | - |
 | Persona 5 Tactica | ✅ | - |
