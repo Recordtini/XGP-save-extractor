@@ -99,7 +99,15 @@
             "name": "Trials of Mana",
             "package": "39EA002F.TOMDF_n746a19ndrrjg",
             "handler": "1c1f",
-			"handler_args": {
+            "handler_args": {
+                "suffix": ".sav"
+            }
+        },
+        {
+            "name": "The Alters",
+            "package": "4063811bitstudios.TheAlters_gwy9gn5q9j1y6",
+            "handler": "1c1f",
+            "handler_args": {
                 "suffix": ".sav"
             }
         },

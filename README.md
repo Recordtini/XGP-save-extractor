@@ -54,6 +54,7 @@ Legend: ✅ Confirmed working, ❔ Unconfirmed, - Not available in the store
 | SpiderHeck | ✅ | ❔ |
 | Starfield | ✅ | - |
 | State of Decay 2 | ✅ | ❔ |
+| The Alters | ✅ | ❔ |
 | Totally Accurate Battle Simulator | ✅ | - |
 | Trials of Mana | ✅ | ❔ |
 | Wo Long: Fallen Dynasty | ❔ | - |
