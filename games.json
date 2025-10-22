@@ -301,11 +301,11 @@
             "package": "KeplerInteractive.Expedition33_ymj30pw7xe604",
             "handler": "coral-island"
         },
-        // One Lonely Outpost
+        // BALL x PIT
         {
-            "name": "One Lonely Outpost",
-            "package": "FreedomGames.OneLonelyOutpostGame_0c9x75n11d8wg",
-            "handler": "one-lonely-outpost"
+            "name": "BALL x PIT",
+            "package": "DevolverDigital.BallxPit_6kzv4j18v0c96",
+            "handler": "ball-x-pit"
         }
     ]
 }
