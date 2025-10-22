@@ -504,6 +504,77 @@ def get_save_paths(
 
             save_meta.append((fname, fpath))
 
+    elif handler_name == "ball-x-pit":
+        # BALL x PIT packs all of its save files into a single binary archive.
+        # This handler attempts to parse this custom format, which appears to be
+        # a serialized C# List of (filePath, fileData) objects.
+        temp_folder = Path(temp_dir.name) / "BallXPit"
+        temp_folder.mkdir()
+
+        # The game should only have one container with one file, which is the archive.
+        archive_file_path = containers[0]["files"][0]["path"]
+
+        with archive_file_path.open("rb") as f:
+            # Based on the file dump, the archive contains a serialized list of files.
+            # We can find the filenames as UTF-16 strings and extract the data between them.
+            # This is a bit fragile but should work if the format is consistent.
+            
+            # Read the whole file into memory
+            content = f.read()
+
+            # Find all potential filenames. They appear to be null-terminated UTF-16 strings
+            # starting with a forward slash.
+            import re
+            
+            # The pattern looks for a length byte, then the string itself in UTF-16.
+            # We'll simplify and just look for the known filenames.
+            files_to_extract = ["/saveslotinfo.balls", "/meta1.yankai", "/meta1_backup.yankai"]
+            
+            file_offsets = {}
+            for fname in files_to_extract:
+                # Search for the filename encoded in UTF-8 (more common for such markers)
+                try:
+                    # Unity's BinaryFormatter often uses a length-prefixed string
+                    marker = len(fname).to_bytes(1, 'little') + fname.encode('utf-8')
+                    offset = content.find(marker)
+                    if offset != -1:
+                        file_offsets[fname] = offset
+                except:
+                    pass # Continue if a file isn't found
+            
+            # If we can't find markers, this approach won't work.
+            if not file_offsets:
+                 raise Exception("Could not find file markers in BALL x PIT save data. The format may have changed.")
+
+            # Sort the files by their appearance in the archive
+            sorted_files = sorted(file_offsets.items(), key=lambda item: item[1])
+
+            for i, (fname, offset) in enumerate(sorted_files):
+                # The data for a file starts after its name marker and ends at the start of the next file's marker.
+                
+                # Find the start of the actual file data. This requires some guesswork.
+                # Let's assume the data starts right after the marker.
+                start_offset = offset + len(len(fname).to_bytes(1, 'little') + fname.encode('utf-8'))
+                
+                # The file data seems to be prefixed with its length (4 bytes, little-endian)
+                data_len = int.from_bytes(content[start_offset:start_offset+4], 'little')
+                data_start = start_offset + 4 # Move past the length prefix
+                
+                # Set the end offset
+                end_offset = data_start + data_len
+                
+                file_data = content[data_start:end_offset]
+
+                # Clean up the filename (remove leading slash)
+                clean_fname = fname.lstrip("/")
+
+                fpath = temp_folder / clean_fname
+                fpath.parent.mkdir(parents=True, exist_ok=True)
+                with fpath.open("wb") as out_f:
+                    out_f.write(file_data)
+                
+                save_meta.append((clean_fname, fpath))
+
     else:
         raise Exception('Unsupported XGP app "%s"' % store_pkg_name)
 
